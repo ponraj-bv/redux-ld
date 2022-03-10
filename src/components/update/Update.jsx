@@ -3,7 +3,7 @@ import Warning from "../warning/Warning";
 import "./update.css";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { update } from "../../redux/userSlice";
+import { remove, update } from "../../redux/userSlice";
 
 export default function Update() {
   const [name, setName] = useState("");
@@ -11,9 +11,14 @@ export default function Update() {
   const user = useSelector((state) => state.user); 
   const dispatch = useDispatch();
 
-  const handleUpdate = (e)=> {
+  const handleUpdate = (e) => {
     e.preventDefault();
-    dispatch(update({name,email}))
+    dispatch(update({name,email})) // {name, email} part is the payload for (dispatch) action.
+  }
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+    dispatch(remove())
   }
 
   // console.log(name,email);
@@ -23,7 +28,7 @@ export default function Update() {
       <div className="updateWrapper">
         <h3 className="updateTitle">Update Your Account</h3>
         <Warning />
-        <button className="delete">Delete Account</button>
+        <button className="delete" onClick={handleDelete}>Delete Account</button>
         <div className="updateContainer">
           <form>
             <div className="formItem">
